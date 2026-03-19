@@ -3,15 +3,33 @@ import { DeviceState } from './devices';
 const WS_URL = process.env.EXPO_PUBLIC_WS_URL || 'ws://10.0.0.49:3000/mobile';
 
 type StateUpdateCallback = (state: DeviceState) => void;
+type ConnectionCallback = (connected: boolean) => void;
 
 class WsService {
   private ws: WebSocket | null = null;  // ws connection instance
   private onStateUpdate: StateUpdateCallback | null = null; // callback to notify UI of state updates
+  private onConnectionChange: ConnectionCallback | null = null;
+  private _connected = false;
 
   // this is the standard pattern for webSocket in react native
   // create a service singletan to manage the connection and export a hook to subscribe to state updates
   onUpdate(callback: StateUpdateCallback) {
     this.onStateUpdate = callback;
+  }
+
+  onConnection(callback: ConnectionCallback) {
+    this.onConnectionChange = callback;
+  }
+
+  get connected() {
+    return this._connected;
+  }
+
+  private setConnected(val: boolean) {
+    if (this._connected !== val) {
+      this._connected = val;
+      this.onConnectionChange?.(val);
+    }
   }
 
   connect() {
@@ -22,6 +40,7 @@ class WsService {
 
     this.ws.onopen = () => {
       console.log('[WS] Connected');
+      this.setConnected(true);
     };
 
     this.ws.onmessage = (e) => {
@@ -53,6 +72,7 @@ class WsService {
   disconnect() {
     this.ws?.close();
     this.ws = null;
+    this.setConnected(false);
   }
 }
 

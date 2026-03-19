@@ -35,7 +35,6 @@ export async function scanNfcTag(): Promise<string> {
 
     return uid;
   } finally {
-    // Always cancel the request when done, even if it throws
     await NfcManager.cancelTechnologyRequest();
   }
 }

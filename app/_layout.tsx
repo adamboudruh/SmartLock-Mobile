@@ -1,15 +1,19 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { ThemeProvider, useTheme } from './../utils/useTheme';
 
-export default function Layout() {
+function AppTabs() {
+  const { theme } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#2563eb',
-        tabBarInactiveTintColor: '#6b7280',
-        tabBarStyle: { backgroundColor: '#ffffff' },
-        headerStyle: { backgroundColor: '#ffffff' },
-        headerTitleStyle: { fontWeight: 'bold' },
+        tabBarActiveTintColor: theme.primary,
+        tabBarInactiveTintColor: theme.textSecondary,
+        tabBarStyle: { backgroundColor: theme.tabBar, borderTopColor: theme.border },
+        headerStyle: { backgroundColor: theme.surface },
+        headerTitleStyle: { fontWeight: 'bold', color: theme.text },
+        headerTintColor: theme.text,
       }}
     >
       <Tabs.Screen
@@ -39,6 +43,23 @@ export default function Layout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
+  );
+}
+
+export default function Layout() {
+  return (
+    <ThemeProvider>
+      <AppTabs />
+    </ThemeProvider>
   );
 }

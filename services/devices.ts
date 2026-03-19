@@ -7,6 +7,16 @@ export interface DeviceState {
   online:   boolean;        // is device online or offline
 }
 
+export interface DeviceSetting {
+    settingId: number;
+    name: string;
+    value: string;
+    defaultValue: string;
+}
+
 export const getState = () => api.get<DeviceState>('/devices/state');
 export const lockDoor = () => api.post('/devices/lock');
 export const unlockDoor = () => api.post('/devices/unlock');
+export const getSettings = () => api.get<DeviceSetting[]>('/devices/settings');
+export const updateSettings = (settings: { settingId: number; value: string }[]) =>
+    api.put('/devices/settings', { settings });

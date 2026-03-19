@@ -1,0 +1,48 @@
+export type ThemeMode = 'system' | 'light' | 'dark';
+
+export const colors = {
+    light: {
+        background: '#f8fafc',
+        surface: '#ffffff',
+        surfaceAlt: '#eef2ff',
+        text: '#0f172a',
+        textSecondary: '#64748b',
+        primary: '#2563eb',
+        primaryLight: '#dbeafe',
+        accent: '#ea580c',
+        accentLight: '#ffedd5',
+        border: '#dbe3ef',
+        error: '#dc2626',
+        success: '#16a34a',
+        warning: '#d97706',
+        destructive: '#dc2626',
+        tabBar: '#ffffff',
+        shadow: '#0f172a',
+        inputBg: '#ffffff',
+        placeholder: '#94a3b8',
+        overlay: 'rgba(2,6,23,0.5)',
+    },
+    dark: {
+        background: '#0b1220',
+        surface: '#111827',
+        surfaceAlt: '#172554',
+        text: '#f8fafc',
+        textSecondary: '#94a3b8',
+        primary: '#60a5fa',
+        primaryLight: '#1e3a8a',
+        accent: '#fb923c',
+        accentLight: '#7c2d12',
+        border: '#243244',
+        error: '#f87171',
+        success: '#4ade80',
+        warning: '#f59e0b',
+        destructive: '#f87171',
+        tabBar: '#111827',
+        shadow: '#000000',
+        inputBg: '#0f172a',
+        placeholder: '#64748b',
+        overlay: 'rgba(0,0,0,0.6)',
+    },
+};
+
+export type AppTheme = typeof colors.light;
